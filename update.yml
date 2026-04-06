@@ -2,23 +2,28 @@ name: GitHub Data Updater
 
 on:
   schedule:
-    - cron: '0 17 * * *' # 매일 새벽 2시 실행
-  workflow_dispatch:
+    - cron: '0 17 * * *' # 매일 새벽 2시 실행 (한국 시간)
+  workflow_dispatch: # 수동 실행 버튼
 
 permissions:
-  contents: write # 깃허브에 파일을 쓸 수 있는 권한 부여
+  contents: write # 파일 쓰기 권한
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      # 🚀 v3 -> v4로 업데이트 (Node.js 최신 버전 지원)
+      - uses: actions/checkout@v4 
+
+      # 🚀 v4 -> v5로 업데이트 (Node.js 최신 버전 지원)
+      - uses: actions/setup-python@v5 
         with:
           python-version: '3.10'
-      - run: python scraper.py
+
+      - name: 파이썬 스크립트 실행
+        run: python scraper.py
       
-      - name: 깃허브에 데이터 파일 자동 덮어쓰기
+      - name: 깃허브에 데이터 파일 자동 저장
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
