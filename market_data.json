@@ -1,0 +1,26 @@
+[
+    {
+        "name": "동래 래미안 아이파크 (84㎡)",
+        "initial_price": "14.9억",
+        "current_price": "19.5억",
+        "premium": "+4.6억",
+        "percent": "30.8",
+        "updated_at": "2026.04.06 기준 (자동 업데이트)"
+    },
+    {
+        "name": "동래 롯데캐슬 퀸 (84㎡)",
+        "initial_price": "12.2억",
+        "current_price": "15.8억",
+        "premium": "+3.6억",
+        "percent": "29.5",
+        "updated_at": "2026.04.06 기준 (자동 업데이트)"
+    },
+    {
+        "name": "동래 더샵 (84㎡)",
+        "initial_price": "11.5억",
+        "current_price": "14.2억",
+        "premium": "+2.7억",
+        "percent": "23.4",
+        "updated_at": "2026.04.06 기준 (자동 업데이트)"
+    }
+]
