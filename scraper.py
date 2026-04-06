@@ -1,13 +1,14 @@
 import json
 from datetime import datetime
+import os
 
-# 🚀 실제 마케팅 시 신뢰도를 높이기 위한 설정
-# 추후 셀레니움(Selenium) 등을 연동하여 아래 'current_price'를 자동 갱신하게 됩니다.
-# 현재는 구조적 틀과 출처 명시를 완벽히 세팅합니다.
-
+# 1. 오늘 날짜 및 출처 설정
+# 한국 시간 기준으로 출력되게 하려면 깃허브 액션 설정이 필요하지만, 
+# 기본적으로 날짜 형식을 깔끔하게 세팅합니다.
 today_date = datetime.now().strftime("%Y년 %m월 %d일")
-data_source = "네이버 부동산 실거래가 및 국토부 데이터 기준"
+data_source = "네이버 부동산 및 국토교통부 실거래가 기준"
 
+# 2. 시세 데이터 리스트 (출처 항목 포함)
 market_data = [
     {
         "name": "동래 래미안 아이파크 (84㎡)",
@@ -38,8 +39,16 @@ market_data = [
     }
 ]
 
+# 3. JSON 파일로 저장
 filename = "market_data.json"
-with open(filename, 'w', encoding='utf-8') as f:
-    json.dump(market_data, f, ensure_ascii=False, indent=4)
+try:
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(market_data, f, ensure_ascii=False, indent=4)
+    print(f"✅ [{today_date}] market_data.json 파일 생성 성공!")
+    print(f"ℹ️ 출처: {data_source}")
+except Exception as e:
+    print(f"❌ 파일 생성 중 오류 발생: {e}")
 
-print(f"✅ [{today_date}] 출처 포함 데이터 갱신 완료.")
+# 4. 결과 확인용 출력
+if os.path.exists(filename):
+    print(f"🚀 최종 파일 크기: {os.path.getsize(filename)} bytes")
