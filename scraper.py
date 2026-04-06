@@ -1,10 +1,7 @@
 import json
-import ftplib
-import os
 from datetime import datetime
 
-# 1. 시세 데이터 세팅 (실제 크롤링(BeautifulSoup 등) 코드를 추후 이 부분에 넣습니다)
-# 매일 자동으로 오늘 날짜가 갱신되어 홈페이지에 표시됩니다.
+# 1. 시세 데이터 세팅
 today_date = datetime.now().strftime("%Y.%m.%d 기준 (자동 업데이트)")
 
 market_data = [
@@ -34,34 +31,9 @@ market_data = [
     }
 ]
 
-# 2. JSON 파일로 저장
+# 2. JSON 파일로 저장 (깃허브 폴더 안에 바로 저장됨)
 filename = "market_data.json"
 with open(filename, 'w', encoding='utf-8') as f:
     json.dump(market_data, f, ensure_ascii=False, indent=4)
 
-print(f"[{today_date}] JSON 파일 생성 완료.")
-
-# 3. 깃허브 서버에서 닷홈 FTP로 자동 업로드
-FTP_HOST = os.environ.get("FTP_HOST")
-FTP_USER = os.environ.get("FTP_USER")
-FTP_PASS = os.environ.get("FTP_PASS")
-# 닷홈은 보통 기본 파일 경로가 /html 입니다. json 파일을 넣을 경로를 지정합니다.
-FTP_DIR = os.environ.get("FTP_DIR", "/html") 
-
-if FTP_HOST and FTP_USER and FTP_PASS:
-    try:
-        # FTP 서버 접속
-        ftp = ftplib.FTP(FTP_HOST)
-        ftp.login(FTP_USER, FTP_PASS)
-        ftp.cwd(FTP_DIR)
-        
-        # 파일 덮어쓰기 (업로드)
-        with open(filename, 'rb') as f:
-            ftp.storbinary(f'STOR {filename}', f)
-            
-        ftp.quit()
-        print("🚀 닷홈 서버 FTP 업로드 완벽 성공!")
-    except Exception as e:
-        print(f"❌ FTP 업로드 실패: {e}")
-else:
-    print("⚠️ 깃허브 시크릿(FTP 정보)이 설정되지 않아 파일이 전송되지 않았습니다.")
+print(f"[{today_date}] JSON 파일 깃허브 저장 완료.")
